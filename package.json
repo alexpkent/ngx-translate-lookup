@@ -1,7 +1,7 @@
 {
   "name": "ngx-translate-lookup",
   "displayName": "ngx-translate-lookup",
-  "description": "Lookup translations for ngx-translate",
+  "description": "Lookup resources.resx translations for ngx-translate",
   "version": "0.0.1",
   "publisher": "apk27",
   "engines": {
