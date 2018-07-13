@@ -1,0 +1,46 @@
+{
+  "name": "ngx-translate-lookup",
+  "displayName": "ngx-translate-lookup",
+  "description": "Lookup translations for ngx-translate",
+  "version": "0.0.1",
+  "publisher": "apk27",
+  "engines": {
+    "vscode": "^1.25.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:html"
+  ],
+  "main": "./out/extension",
+  "contributes": {
+    "configuration": {
+      "title": "ngx-translate translations lookup configuration",
+      "properties": {
+        "ngx-translate.lookup.resourcesPath": {
+          "type": "string",
+          "default": "E:/git/Unify/Src/TW.Gem.WebUI.Resources/Resources.en-GB.resx",
+          "description": "Path to a resources.resx file for lookups."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+  },
+  "dependencies": {
+    "resx": "1.2.0"
+  },
+  "devDependencies": {
+    "typescript": "^2.6.1",
+    "vscode": "^1.1.6",
+    "tslint": "^5.8.0",
+    "@types/node": "^7.0.43",
+    "@types/mocha": "^2.2.42"
+  }
+}
