@@ -2,6 +2,9 @@
   "name": "ngx-translate-lookup",
   "displayName": "ngx-translate-lookup",
   "description": "Lookup resources.resx translations for ngx-translate",
+  "repository": {
+    "url": "https://github.com/apk27/ngx-translate-lookup"
+  },
   "version": "0.0.1",
   "publisher": "apk27",
   "engines": {
@@ -20,7 +23,7 @@
       "properties": {
         "ngx-translate.lookup.resourcesPath": {
           "type": "string",
-          "default": "E:/git/Unify/Src/TW.Gem.WebUI.Resources/Resources.en-GB.resx",
+          "default": "Resources.en-GB.resx",
           "description": "Path to a resources.resx file for lookups.",
           "required": true
         },
