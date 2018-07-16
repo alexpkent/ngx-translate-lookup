@@ -2,19 +2,10 @@ import * as vscode from 'vscode';
 
 export function createHighlightProvider(
     context: vscode.ExtensionContext,
-    resourceDictionary: vscode.CompletionItem[],
-    textMatchers: string[]) {
+    resourceDictionary: vscode.CompletionItem[]) {
 
     const decoration = vscode.window.createTextEditorDecorationType({
-		overviewRulerColor: 'red',
 		textDecoration: 'underline',
-		overviewRulerLane: vscode.OverviewRulerLane.Right,
-		light: {
-			borderColor: 'red'
-		},
-		dark: {
-			borderColor: 'red'
-		}
     });
     
     let activeEditor = vscode.window.activeTextEditor;
@@ -42,6 +33,9 @@ export function createHighlightProvider(
 		}
 		timeout = setTimeout(updateDecorations, 500);
 	}
+
+	const config = vscode.workspace.getConfiguration();
+    const textMatchers = config.get('ngx-translate.lookup.regex') as string[];
 
 	function updateDecorations() {
 		if (!activeEditor) {

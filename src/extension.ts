@@ -7,10 +7,13 @@ const resx2js  = require('resx/resx2js');
 
 export function activate(context: vscode.ExtensionContext) {
 
-    console.log('Congratulations, your extension is now active!');
-
     const config = vscode.workspace.getConfiguration();
     const resxPath = config.get('ngx-translate.lookup.resourcesPath');
+    if (!resxPath) {
+        console.log('No resources path found in config');
+        return;
+    }
+
     console.log('Resources config path: ' + resxPath);
 
     let resourceDictionary: vscode.CompletionItem[] = [];
@@ -32,15 +35,13 @@ export function activate(context: vscode.ExtensionContext) {
                     );
                 }
             }
-            console.log(resourceDictionary);
+            console.log('Resource dictionary read successfully');
           });
       });
 
-    const textMatchers = [ 'translate="([A-Z_]+)"', "{{'([A-Z_]+)' \| translate }}" ];
-
     context.subscriptions.push(vscode.languages.registerCompletionItemProvider('html', createCompletionItemProvider(resourceDictionary), '"', '\''));
-    context.subscriptions.push(vscode.languages.registerHoverProvider('html', createHoverProvider(textMatchers, resourceDictionary)));
-    createHighlightProvider(context, resourceDictionary, textMatchers);
+    context.subscriptions.push(vscode.languages.registerHoverProvider('html', createHoverProvider(resourceDictionary)));
+    createHighlightProvider(context, resourceDictionary);
 }
 
 export function deactivate() {

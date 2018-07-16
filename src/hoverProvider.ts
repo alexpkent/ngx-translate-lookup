@@ -1,7 +1,10 @@
 'use strict';
 import * as vscode from 'vscode';
 
-export function createHoverProvider (textMatchers: string[], resourceDictionary: vscode.CompletionItem[]): vscode.HoverProvider {
+export function createHoverProvider (resourceDictionary: vscode.CompletionItem[]): vscode.HoverProvider {
+    const config = vscode.workspace.getConfiguration();
+    const textMatchers = config.get('ngx-translate.lookup.regex') as string[];
+    
     return {
         provideHover(document, position) {
 
