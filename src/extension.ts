@@ -2,6 +2,7 @@
 import * as vscode from 'vscode';
 import { createHoverProvider } from './hoverProvider';
 import { createCompletionItemProvider } from './completionItemProvider';
+import { createHighlightProvider } from './highlightProvider';
 const resx2js  = require('resx/resx2js');
 
 export function activate(context: vscode.ExtensionContext) {
@@ -35,10 +36,11 @@ export function activate(context: vscode.ExtensionContext) {
           });
       });
 
-    context.subscriptions.push(
-        vscode.languages.registerCompletionItemProvider('html', createCompletionItemProvider(resourceDictionary), '"', '\''));
-    context.subscriptions.push(
-        vscode.languages.registerHoverProvider('html', createHoverProvider(resourceDictionary)));
+    const textMatchers = [ 'translate="([A-Z_]+)"', "{{'([A-Z_]+)' \| translate }}" ];
+
+    context.subscriptions.push(vscode.languages.registerCompletionItemProvider('html', createCompletionItemProvider(resourceDictionary), '"', '\''));
+    context.subscriptions.push(vscode.languages.registerHoverProvider('html', createHoverProvider(textMatchers, resourceDictionary)));
+    createHighlightProvider(context, resourceDictionary, textMatchers);
 }
 
 export function deactivate() {

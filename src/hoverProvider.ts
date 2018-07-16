@@ -1,16 +1,15 @@
 'use strict';
 import * as vscode from 'vscode';
 
-export function createHoverProvider (resourceDictionary: vscode.CompletionItem[]): vscode.HoverProvider {
+export function createHoverProvider (textMatchers: string[], resourceDictionary: vscode.CompletionItem[]): vscode.HoverProvider {
     return {
         provideHover(document, position) {
 
             let key: string;
             let checker = undefined;
             let range;
-            const checkers = [ 'translate="([A-Z_]+)"', "{{'([A-Z_]+)' \| translate }}" ];
 
-            for (const check of checkers) {
+            for (const check of textMatchers) {
                 range = document.getWordRangeAtPosition(position, new RegExp(check));
                 if (range) {
                     checker = check;
