@@ -28,6 +28,16 @@
     "configuration": {
       "title": "ngx-translate translations lookup configuration",
       "properties": {
+        "ngx-translate.lookup.resourcesType": {
+          "type": "string",
+          "default": "resx",
+          "description": "Resource dictionary type, either 'resx' or 'json'.",
+          "required": "true",
+          "anyOf": [
+            "resx",
+            "json"
+          ]
+        },
         "ngx-translate.lookup.resourcesPath": {
           "type": "string",
           "default": "Resources.en-GB.resx",

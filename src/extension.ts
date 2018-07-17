@@ -8,36 +8,58 @@ const resx2js  = require('resx/resx2js');
 export function activate(context: vscode.ExtensionContext) {
 
     const config = vscode.workspace.getConfiguration();
-    const resxPath = config.get('ngx-translate.lookup.resourcesPath');
-    if (!resxPath) {
+    const resourcesPath = config.get('ngx-translate.lookup.resourcesPath');
+    if (!resourcesPath) {
         console.log('No resources path found in config');
         return;
     }
 
-    console.log('Resources config path: ' + resxPath);
+    const resourcesType = config.get('ngx-translate.lookup.resourcesType');
+
+    console.log(`Resources config type: ${resourcesType} path: ${resourcesPath}`);
 
     let resourceDictionary: vscode.CompletionItem[] = [];
 
     try {
-        vscode.workspace.openTextDocument(vscode.Uri.file(resxPath as string))
+        vscode.workspace.openTextDocument(vscode.Uri.file(resourcesPath as string))
         .then((document) => {
         let text = document.getText();
-        resx2js(text, (err: string, resources: any) => {
-            for (const key in resources) {
-                if (resources.hasOwnProperty(key)) {
-                    const item = resources[key];
+        
+        if (resourcesType === 'resx') {
+            resx2js(text, (err: string, resources: any) => {
+                for (const key in resources) {
+                    if (resources.hasOwnProperty(key)) {
+                        const item = resources[key];
+                        resourceDictionary.push(
+                            {
+                                label: `Translate:${key}`, 
+                                detail: item,  
+                                insertText: key, 
+                                kind: vscode.CompletionItemKind.Text 
+                            }
+                        );
+                    }
+                }
+            });
+        }
+
+        if (resourcesType === 'json') {
+            const resources = JSON.parse(text);
+            for (const item of resources) {
+                Object.keys(item).forEach(function (key) {
                     resourceDictionary.push(
                         {
                             label: `Translate:${key}`, 
-                            detail: item,  
+                            detail: item[key],  
                             insertText: key, 
                             kind: vscode.CompletionItemKind.Text 
                         }
                     );
-                }
+              });
             }
-            console.log('Resource dictionary read successfully');
-          });
+        }
+
+        console.log('Resource dictionary read successfully');
       });
 
     context.subscriptions.push(vscode.languages.registerCompletionItemProvider('html', createCompletionItemProvider(resourceDictionary), '"', '\''));
