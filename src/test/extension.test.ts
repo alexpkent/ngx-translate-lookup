@@ -14,9 +14,20 @@ import * as assert from 'assert';
 // Defines a Mocha test suite to group tests of similar kind together
 suite("Extension Tests", function () {
 
-    // Defines a Mocha unit test
-    test("Something 1", function() {
-        assert.equal(-1, [1, 2, 3].indexOf(5));
-        assert.equal(-1, [1, 2, 3].indexOf(0));
+    test('translate regex finds the relevant items', function() {
+        const matcher = 'translate="([A-Z_]+)';
+        const regex = new RegExp(matcher);
+        let match;
+        const matches = [];
+        while (match = regex.exec(getText())) {
+            let key = match[1];
+            matches.push(key);
+        }
+
+        assert.equal(2, matches.length);
     });
+
+    function getText() {
+        return '<label translate="TEST1"><label translate="TEST_2"><label translate2"NO_MATCH">';
+    }
 });

@@ -2,13 +2,23 @@
   "name": "ngx-translate-lookup",
   "displayName": "ngx-translate-lookup",
   "description": "Lookup resources.resx translations for ngx-translate",
-  "version": "0.0.1",
+  "repository": {
+    "url": "https://github.com/apk27/ngx-translate-lookup",
+    "type": "git"
+  },
+  "homepage": "https://github.com/apk27/ngx-translate-lookup/master/README.md",
+  "version": "1.0.0",
   "publisher": "apk27",
   "engines": {
     "vscode": "^1.25.0"
   },
   "categories": [
     "Other"
+  ],
+  "keywords": [
+    "angular",
+    "ngx-translate",
+    "translate"
   ],
   "activationEvents": [
     "onLanguage:html"
@@ -20,8 +30,18 @@
       "properties": {
         "ngx-translate.lookup.resourcesPath": {
           "type": "string",
-          "default": "E:/git/Unify/Src/TW.Gem.WebUI.Resources/Resources.en-GB.resx",
-          "description": "Path to a resources.resx file for lookups."
+          "default": "Resources.en-GB.resx",
+          "description": "Path to a resources.resx file for lookups.",
+          "required": true
+        },
+        "ngx-translate.lookup.regex": {
+          "type": "array",
+          "default": [
+            "translate=\"([A-Z_]+)\"",
+            "{{'([A-Z_]+)' | translate }}"
+          ],
+          "description": "Regular expressions used to locate translation string/keys within documents.",
+          "required": true
         }
       }
     }

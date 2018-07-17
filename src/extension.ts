@@ -1,18 +1,25 @@
 'use strict';
 import * as vscode from 'vscode';
+import { createHoverProvider } from './hoverProvider';
+import { createCompletionItemProvider } from './completionItemProvider';
+import { createHighlightProvider } from './highlightProvider';
 const resx2js  = require('resx/resx2js');
 
 export function activate(context: vscode.ExtensionContext) {
 
-    console.log('Congratulations, your extension "translatelookup" is now active!');
-
     const config = vscode.workspace.getConfiguration();
     const resxPath = config.get('ngx-translate.lookup.resourcesPath');
+    if (!resxPath) {
+        console.log('No resources path found in config');
+        return;
+    }
+
     console.log('Resources config path: ' + resxPath);
 
     let resourceDictionary: vscode.CompletionItem[] = [];
 
-    vscode.workspace.openTextDocument(vscode.Uri.file(resxPath as string))
+    try {
+        vscode.workspace.openTextDocument(vscode.Uri.file(resxPath as string))
         .then((document) => {
         let text = document.getText();
         resx2js(text, (err: string, resources: any) => {
@@ -29,61 +36,17 @@ export function activate(context: vscode.ExtensionContext) {
                     );
                 }
             }
-            console.log(resourceDictionary);
+            console.log('Resource dictionary read successfully');
           });
       });
 
-    const completionItem = {
-        provideCompletionItems: () => resourceDictionary
-    };
-
-    const hoverProvider: vscode.HoverProvider = {
-        provideHover(document, position) {
-
-            let key: string;
-            let checker = undefined;
-            let range;
-            const checkers = [ 'translate="([A-Z_]+)"', "{{'([A-Z_]+)' \| translate }}" ];
-
-            for (const check of checkers) {
-                range = document.getWordRangeAtPosition(position, new RegExp(check));
-                if (range) {
-                    checker = check;
-                    break;
-                }
-            }
-
-            if (checker === undefined) {
-                console.log('hover range is not a translate directive');
-                return null;
-            }
-
-            const text = document.getText(range);
-
-            const val = new RegExp(checker);
-            const regexMatch = val.exec(text);
-            if (!regexMatch) {
-                console.log('hover range cannot match a regex');
-                return null;
-            }
-
-            key = regexMatch[1];
-
-            const resource = resourceDictionary.find(item => item.insertText === key);
-
-            const message = resource ? 
-            `${key}\nResource value: '${resource.detail}'` : 
-            `No translation found for '${key}', check the resources!`;
-
-            return new vscode.Hover({
-                language: 'html',
-                value: message
-            });
-        }
-    };
-
-    context.subscriptions.push(vscode.languages.registerCompletionItemProvider('html', completionItem, '"', '\''));
-    context.subscriptions.push(vscode.languages.registerHoverProvider('html', hoverProvider));
+    context.subscriptions.push(vscode.languages.registerCompletionItemProvider('html', createCompletionItemProvider(resourceDictionary), '"', '\''));
+    context.subscriptions.push(vscode.languages.registerHoverProvider('html', createHoverProvider(resourceDictionary)));
+    createHighlightProvider(context, resourceDictionary);
+    } catch (error) {
+        console.error('error when reading resx file and configuring, please check your ngx-translate.lookup.resourcesPath setting.')
+        console.error(error);
+    }
 }
 
 export function deactivate() {
