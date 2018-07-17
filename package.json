@@ -3,8 +3,10 @@
   "displayName": "ngx-translate-lookup",
   "description": "Lookup resources.resx translations for ngx-translate",
   "repository": {
-    "url": "https://github.com/apk27/ngx-translate-lookup"
+    "url": "https://github.com/apk27/ngx-translate-lookup",
+    "type": "git"
   },
+  "homepage": "https://github.com/apk27/ngx-translate-lookup/master/README.md",
   "version": "0.0.1",
   "publisher": "apk27",
   "engines": {
@@ -12,6 +14,11 @@
   },
   "categories": [
     "Other"
+  ],
+  "keywords": [
+    "angular",
+    "ngx-translate",
+    "translate"
   ],
   "activationEvents": [
     "onLanguage:html"
