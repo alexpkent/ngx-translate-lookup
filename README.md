@@ -6,6 +6,18 @@ Using [ngx-translate](http://www.ngx-translate.com/) your html will have referen
 
 This extension will read a resources.resx file and then provide intellisense and code completion displaying available keys and values. It will also provide highlighting of values that do not exist in the resx file.
 
+### Code Completion
+
+![code completion image](screenshots/intellisense.png)
+
+### Missing value warnings
+
+![missing values image](screenshots/problems.png)
+
+### Hover information
+
+![hover info image](screenshots/hover.png)
+
 ## Extension Settings
 
 This extension contributes the following settings:

@@ -7,7 +7,7 @@
     "type": "git"
   },
   "homepage": "https://github.com/apk27/ngx-translate-lookup/master/README.md",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "apk27",
   "engines": {
     "vscode": "^1.25.0"
@@ -47,8 +47,8 @@
         "ngx-translate.lookup.regex": {
           "type": "array",
           "default": [
-            "translate=\"([A-Z_]+)\"",
-            "{{'([A-Z_]+)' | translate }}"
+            "translate=\"([A-Za-z0-9_]+)\"",
+            "{{'([A-Za-z0-9_]+)' | translate }}"
           ],
           "description": "Regular expressions used to locate translation string/keys within documents.",
           "required": true
