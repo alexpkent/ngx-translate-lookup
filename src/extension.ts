@@ -18,7 +18,8 @@ export function activate(context: vscode.ExtensionContext) {
 
     let resourceDictionary: vscode.CompletionItem[] = [];
 
-    vscode.workspace.openTextDocument(vscode.Uri.file(resxPath as string))
+    try {
+        vscode.workspace.openTextDocument(vscode.Uri.file(resxPath as string))
         .then((document) => {
         let text = document.getText();
         resx2js(text, (err: string, resources: any) => {
@@ -42,6 +43,10 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.languages.registerCompletionItemProvider('html', createCompletionItemProvider(resourceDictionary), '"', '\''));
     context.subscriptions.push(vscode.languages.registerHoverProvider('html', createHoverProvider(resourceDictionary)));
     createHighlightProvider(context, resourceDictionary);
+    } catch (error) {
+        console.error('error when reading resx file and configuring, please check your ngx-translate.lookup.resourcesPath setting.')
+        console.error(error);
+    }
 }
 
 export function deactivate() {
