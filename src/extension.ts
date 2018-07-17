@@ -28,8 +28,8 @@ export function activate(context: vscode.ExtensionContext) {
                     const item = resources[key];
                     resourceDictionary.push(
                         {
-                            label: `Translate:${key}`, 
-                            detail: item,  
+                            label: key, 
+                            detail: `ngx-translate: ${item}`,  
                             insertText: key, 
                             kind: vscode.CompletionItemKind.Text 
                         }
@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.languages.registerHoverProvider('html', createHoverProvider(resourceDictionary)));
     createHighlightProvider(context, resourceDictionary);
     } catch (error) {
-        console.error('error when reading resx file and configuring, please check your ngx-translate.lookup.resourcesPath setting.')
+        console.error('error when reading resx file and configuring, please check your ngx-translate.lookup.resourcesPath setting.');
         console.error(error);
     }
 }

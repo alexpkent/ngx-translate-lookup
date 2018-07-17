@@ -38,13 +38,13 @@ export function createHoverProvider (resourceDictionary: vscode.CompletionItem[]
 
             const resource = resourceDictionary.find(item => item.insertText === key);
 
-            const message = resource ? 
-            `${key}\nResource value: '${resource.detail}'` : 
-            `No translation found for '${key}', check the resources!`;
+            if (!resource) {
+                return null;
+            }
 
             return new vscode.Hover({
                 language: 'html',
-                value: message
+                value: `${key}\nResource value: '${resource.detail}'`
             });
         }
     };
