@@ -32,8 +32,7 @@
           "type": "string",
           "default": "resx",
           "description": "Resource dictionary type, either 'resx' or 'json'.",
-          "required": "true",
-          "anyOf": [
+          "enum": [
             "resx",
             "json"
           ]
