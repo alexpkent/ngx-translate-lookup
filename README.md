@@ -4,7 +4,7 @@ Using [ngx-translate](http://www.ngx-translate.com/) your html will have referen
 
 ## Features
 
-This extension will read a resources.resx file and then provide intellisense and code completion displaying available keys and values. It will also provide highlighting of values that do not exist in the resx file.
+This extension will read a .resx or .json file and then provide intellisense and code completion displaying available keys and values. It will also provide problem reporting of values that do not exist in the resources file.
 
 ### Code Completion
 
@@ -22,6 +22,14 @@ This extension will read a resources.resx file and then provide intellisense and
 
 This extension contributes the following settings:
 
-- `ngx-translate.lookup.resourcesPath`: Path to a resources.resx file for lookups.
+- 'ngx-translate.lookup.resourcesType': Type of resource file, either .resx or .json.
+  - If json then the format should be:
+  ```
+  [
+    { STRING1: "This is the first" },
+    { STRING2: "This is the second" }
+  ]
+  ```
+- `ngx-translate.lookup.resourcesPath`: Path to a resources file (.resx or.json) file for lookups.
 - `ngx-translate.lookup.regex`: Regular expressions used to locate translation string/keys within documents.
   These default to find usages of 'translate="KEY"' and '{{'KEY' | translate}}'

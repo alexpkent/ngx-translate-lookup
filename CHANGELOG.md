@@ -2,6 +2,10 @@
 
 All notable changes to the "ngx-translate-lookup" extension will be documented in this file.
 
+## 1.0.2
+
+- Added support for resources file either in .resx or .json.
+
 ## 1.0.1
 
 - Improved regex to allow for lowercase, uppercase and integers in keys.
