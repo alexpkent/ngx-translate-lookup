@@ -1,13 +1,13 @@
 {
   "name": "ngx-translate-lookup",
   "displayName": "ngx-translate-lookup",
-  "description": "Lookup resources.resx translations for ngx-translate",
+  "description": "vscode extension to display strings, autocomplete and find missing strings on html pages using ngx-translate.",
   "repository": {
     "url": "https://github.com/apk27/ngx-translate-lookup",
     "type": "git"
   },
   "homepage": "https://github.com/apk27/ngx-translate-lookup/master/README.md",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "apk27",
   "engines": {
     "vscode": "^1.25.0"
@@ -39,8 +39,8 @@
         },
         "ngx-translate.lookup.resourcesPath": {
           "type": "string",
-          "default": "Resources.en-GB.resx",
-          "description": "Path to a resources.resx file for lookups.",
+          "default": "resources.resx",
+          "description": "Path to a resources file (.resx or.json) file for lookups.",
           "required": true
         },
         "ngx-translate.lookup.regex": {
