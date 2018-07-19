@@ -1,8 +1,11 @@
 'use strict';
 import * as vscode from 'vscode';
+import { ResourceDictionary } from './extension';
 
-export function createCompletionItemProvider (resourceDictionary: vscode.CompletionItem[]): vscode.CompletionItemProvider {
+export function createCompletionItemProvider (): vscode.CompletionItemProvider {
     return {
-        provideCompletionItems: () => resourceDictionary
+        provideCompletionItems: () => {
+            return ResourceDictionary.Instance.getResources();
+        }
     };
 }

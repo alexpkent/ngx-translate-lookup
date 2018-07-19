@@ -25,10 +25,10 @@ This extension contributes the following settings:
 - 'ngx-translate.lookup.resourcesType': Type of resource file, either .resx or .json.
   - If json then the format should be:
   ```
-  [
-    { STRING1: "This is the first" },
-    { STRING2: "This is the second" }
-  ]
+  {
+    "STRING1" : "This is the first",
+    "STRING2" : "This is the second"
+  }
   ```
 - `ngx-translate.lookup.resourcesPath`: Path to a resources file (.resx or.json) file for lookups.
 - `ngx-translate.lookup.regex`: Regular expressions used to locate translation string/keys within documents.

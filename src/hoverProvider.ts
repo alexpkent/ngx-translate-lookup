@@ -1,17 +1,19 @@
 'use strict';
 import * as vscode from 'vscode';
+import { ResourceDictionary } from './extension';
 
-export function createHoverProvider (resourceDictionary: vscode.CompletionItem[]): vscode.HoverProvider {
+export function createHoverProvider (): vscode.HoverProvider {
     const config = vscode.workspace.getConfiguration();
-    const textMatchers = config.get('ngx-translate.lookup.regex') as string[];
     
     return {
         provideHover(document, position) {
-
+            
+            const resourceDictionary = ResourceDictionary.Instance.getResources();
             let key: string;
             let checker = undefined;
             let range;
 
+            const textMatchers = config.get('ngx-translate.lookup.regex') as string[];
             for (const check of textMatchers) {
                 range = document.getWordRangeAtPosition(position, new RegExp(check));
                 if (range) {
