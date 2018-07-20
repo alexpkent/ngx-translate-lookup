@@ -6,6 +6,8 @@ import { createHighlightProvider } from './highlightProvider';
 const resx2js = require('resx/resx2js');
 const fs = require('fs');
 
+var output = vscode.window.createOutputChannel("ngx-translate-lookup");
+
 export class ResourceDictionary {
     private constructor() {}
 
@@ -30,13 +32,13 @@ export function readResourceConfig() {
     const config = vscode.workspace.getConfiguration();
     const resourcesPath = config.get('ngx-translate.lookup.resourcesPath') as string;
     if (!resourcesPath) {
-        console.log('No resources path found in config');
+        output.appendLine('No resources path found in config');
         return;
     }
 
     const resourcesType = config.get('ngx-translate.lookup.resourcesType') as string;
 
-    console.log(`Resources config type: ${resourcesType} path: ${resourcesPath}`);
+    output.appendLine(`Resources config type: '${resourcesType}', path: '${resourcesPath}'`);
 
     return {
         resourcesPath: resourcesPath,
@@ -45,10 +47,11 @@ export function readResourceConfig() {
 }
 
 export function activate(context: vscode.ExtensionContext) {
+    output.show(true);
 
     const config = readResourceConfig();
     if (!config) {
-        console.error('No resources config found.');
+        output.appendLine('No resources config found.');
         return;
     }
 
@@ -62,16 +65,18 @@ export function activate(context: vscode.ExtensionContext) {
                 context.subscriptions.push(vscode.languages.registerCompletionItemProvider('html', createCompletionItemProvider(), '"', '\''));
                 context.subscriptions.push(vscode.languages.registerHoverProvider('html', createHoverProvider()));
                 createHighlightProvider(context);
-        });
+            })
+            .catch(() => {
+                output.appendLine('Error when reading resource file, please check your ngx-translate.lookup.resourcesPath and type setting.');
+            });
     } catch (error) {
-        console.error('error when reading resx file and configuring, please check your ngx-translate.lookup.resourcesPath setting.');
-        console.error(error);
+        output.appendLine(error);
     }
 
     let reloadCommand = vscode.commands.registerCommand('ngx-translate-lookup.reload', () => {
         const config = readResourceConfig();
         if (!config) {
-            console.error('No resources config found.');
+            output.appendLine('No resources config found.');
             return;
         }
 
@@ -80,7 +85,10 @@ export function activate(context: vscode.ExtensionContext) {
                 ResourceDictionary.Instance.setResources(dictionary);
 
                 vscode.window.showInformationMessage(`ngx-translate-lookup resource dictionary reloaded from ${config.resourcesPath}`);
-        });
+            })
+            .catch(() => {
+                output.appendLine('Error when reading resource file, please check your ngx-translate.lookup.resourcesPath and type setting.');
+            });
     });
     context.subscriptions.push(reloadCommand);
 }
@@ -89,6 +97,12 @@ export function loadResources(resourcesPath: string, resourcesType: string): Pro
     let resourceDictionary: vscode.CompletionItem[] = [];
 
     return new Promise((resolve, reject) => {
+        var fileExt = resourcesPath.split('.').pop();
+        if (fileExt !== resourcesType){
+            output.appendLine('Resources type doesnt match the resources path file type');
+            reject();
+        }
+
         fs.readFile(resourcesPath, "utf8", function read(err: any, text: string) {
             if (err) {
                 reject(err);

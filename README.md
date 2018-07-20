@@ -18,6 +18,10 @@ This extension will read a .resx or .json file and then provide intellisense and
 
 ![hover info image](screenshots/hover.png)
 
+### Reload
+
+If the config is changed or the resource dictionary is modified the extension can be reloaded with the 'ngx-translate-lookup.reload' command found in the command menu as 'Reload ngx-translate-lookup dictionary'
+
 ## Extension Settings
 
 This extension contributes the following settings:
