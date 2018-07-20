@@ -7,7 +7,7 @@
     "type": "git"
   },
   "homepage": "https://github.com/apk27/ngx-translate-lookup/master/README.md",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "publisher": "apk27",
   "engines": {
     "vscode": "^1.25.0"
@@ -21,10 +21,17 @@
     "translate"
   ],
   "activationEvents": [
-    "onLanguage:html"
+    "onLanguage:html",
+    "onCommand:ngx-translate-lookup.reload"
   ],
   "main": "./out/extension",
   "contributes": {
+    "commands": [
+      {
+        "command": "ngx-translate-lookup.reload",
+        "title": "Reload ngx-translate-lookup dictionary"
+      }
+    ],
     "configuration": {
       "title": "ngx-translate translations lookup configuration",
       "properties": {

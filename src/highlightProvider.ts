@@ -1,10 +1,9 @@
 import * as vscode from 'vscode';
+import { ResourceDictionary } from './extension';
 
 let diagnosticCollection: vscode.DiagnosticCollection;
 
-export function createHighlightProvider(
-    context: vscode.ExtensionContext,
-    resourceDictionary: vscode.CompletionItem[]) {
+export function createHighlightProvider(context: vscode.ExtensionContext) {
 
 	diagnosticCollection = vscode.languages.createDiagnosticCollection("translateErrors");
 	context.subscriptions.push(diagnosticCollection);
@@ -43,6 +42,7 @@ export function createHighlightProvider(
 			return;
 		}
 		
+		const resourceDictionary = ResourceDictionary.Instance.getResources();
         const text = activeEditor.document.getText();
 		const untrackedStrings: vscode.Diagnostic[] = [];
         let match: RegExpExecArray | null;
