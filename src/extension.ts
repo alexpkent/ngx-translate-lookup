@@ -60,7 +60,7 @@ export function activate(context: vscode.ExtensionContext) {
             .then(dictionary => {
                 ResourceDictionary.Instance.setResources(dictionary);
 
-                vscode.window.showInformationMessage(`ngx-translate-lookup resource dictionary loaded from ${config.resourcesPath}`);
+                output.appendLine(`ngx-translate-lookup resource dictionary loaded from ${config.resourcesPath}`);
 
                 context.subscriptions.push(vscode.languages.registerCompletionItemProvider('html', createCompletionItemProvider(), '"', '\''));
                 context.subscriptions.push(vscode.languages.registerHoverProvider('html', createHoverProvider()));
@@ -84,7 +84,7 @@ export function activate(context: vscode.ExtensionContext) {
             .then(dictionary => {
                 ResourceDictionary.Instance.setResources(dictionary);
 
-                vscode.window.showInformationMessage(`ngx-translate-lookup resource dictionary reloaded from ${config.resourcesPath}`);
+                output.appendLine(`ngx-translate-lookup resource dictionary reloaded from ${config.resourcesPath}`);
             })
             .catch(() => {
                 output.appendLine('Error when reading resource file, please check your ngx-translate.lookup.resourcesPath and type setting.');
