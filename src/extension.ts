@@ -89,7 +89,7 @@ export function loadResources(resourcesPath: string, resourcesType: string): Pro
     let resourceDictionary: vscode.CompletionItem[] = [];
 
     return new Promise((resolve, reject) => {
-        fs.readFile(resourcesPath, function read(err: any, text: string) {
+        fs.readFile(resourcesPath, "utf8", function read(err: any, text: string) {
             if (err) {
                 reject(err);
             }
