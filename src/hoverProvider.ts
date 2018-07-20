@@ -23,7 +23,6 @@ export function createHoverProvider (): vscode.HoverProvider {
             }
 
             if (checker === undefined) {
-                console.log('hover range is not a translate directive');
                 return null;
             }
 
@@ -32,7 +31,6 @@ export function createHoverProvider (): vscode.HoverProvider {
             const val = new RegExp(checker);
             const regexMatch = val.exec(text);
             if (!regexMatch) {
-                console.log('hover range cannot match a regex');
                 return null;
             }
 
