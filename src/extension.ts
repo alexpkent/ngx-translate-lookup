@@ -45,18 +45,16 @@ export function activate(context: vscode.ExtensionContext) {
 
         if (resourcesType === 'json') {
             const resources = JSON.parse(text);
-            for (const item of resources) {
-                Object.keys(item).forEach(function (key) {
-                    resourceDictionary.push(
-                        {
-                            label: `ngx-translate: ${key}`, 
-                            detail: item[key],  
-                            insertText: key, 
-                            kind: vscode.CompletionItemKind.Text 
-                        }
-                    );
+            Object.keys(resources).forEach(function (key) {
+                resourceDictionary.push(
+                    {
+                        label: `ngx-translate: ${key}`, 
+                        detail: resources[key],  
+                        insertText: key, 
+                        kind: vscode.CompletionItemKind.Text 
+                    }
+                );
               });
-            }
         }
 
         console.log('Resource dictionary read successfully');
