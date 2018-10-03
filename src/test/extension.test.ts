@@ -11,23 +11,35 @@ import * as assert from 'assert';
 // import * as vscode from 'vscode';
 // import * as myExtension from '../extension';
 
-// Defines a Mocha test suite to group tests of similar kind together
 suite("Extension Tests", function () {
 
-    test('translate regex finds the relevant items', function() {
-        const matcher = 'translate="([A-Z_]+)';
-        const regex = new RegExp(matcher);
+    test('translate directive regex finds the relevant items', function () {
+        const matcher = 'translate="([A-Za-z0-9_]+)"';
+        runTest(matcher, getDirectiveText(), 2);
+    });
+
+    test('translate pipe regex finds the relevant items', function () {
+        const matcher = "{{'([A-Za-z0-9_]+)' | translate_}}";
+        runTest(matcher, getPipeText(), 2);
+    });
+
+    function runTest(matcher: string, text: string, numOfMatches: number) {
+        const regex = new RegExp(matcher, "gm");
         let match;
         const matches = [];
-        while (match = regex.exec(getText())) {
+        while (match = regex.exec(text)) {
             let key = match[1];
             matches.push(key);
         }
 
-        assert.equal(2, matches.length);
-    });
+        assert.equal(numOfMatches, matches.length);
+    }
 
-    function getText() {
+    function getDirectiveText() {
         return '<label translate="TEST1"><label translate="TEST_2"><label translate2"NO_MATCH">';
+    }
+
+    function getPipeText() {
+        return '<label>{{\'TEST\' | translate}}<label><label>{{\'TEST\' | translate }}</label>';
     }
 });
