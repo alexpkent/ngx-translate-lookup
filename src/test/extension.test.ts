@@ -19,7 +19,7 @@ suite("Extension Tests", function () {
     });
 
     test('translate pipe regex finds the relevant items', function () {
-        const matcher = "{{'([A-Za-z0-9_]+)'\s?|\s?translate_}}";
+        const matcher = "{{\\s?'([A-Za-z0-9_]+)'\\s?|\\s?translate_}}";
         runTest(matcher, getPipeText(), 2);
     });
 
@@ -40,6 +40,6 @@ suite("Extension Tests", function () {
     }
 
     function getPipeText() {
-        return '<label>{{\'TEST\'|translate}}<label><label>{{\'TEST\' | translate }}</label>';
+        return '<label>{{\'TEST\'|translate}}<label><label>{{ \'TEST\' | translate }}</label>';
     }
 });
