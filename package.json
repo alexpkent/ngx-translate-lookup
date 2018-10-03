@@ -54,7 +54,7 @@
           "type": "array",
           "default": [
             "translate=\"([A-Za-z0-9_]+)\"",
-            "{{'([A-Za-z0-9_]+)' \\| translate }}"
+            "{{ *'([A-Za-z0-9_]+)' *\\| *translate *}}"
           ],
           "description": "Regular expressions used to locate translation string/keys within documents.",
           "required": true
