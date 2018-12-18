@@ -8,10 +8,10 @@
   },
   "homepage": "https://github.com/apk27/ngx-translate-lookup/master/README.md",
   "license": "MIT",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "publisher": "apk27",
   "engines": {
-    "vscode": "^1.25.0"
+    "vscode": "^1.30.0"
   },
   "categories": [
     "Other"
@@ -27,12 +27,10 @@
   ],
   "main": "./out/extension",
   "contributes": {
-    "commands": [
-      {
-        "command": "ngx-translate-lookup.reload",
-        "title": "Reload ngx-translate-lookup dictionary"
-      }
-    ],
+    "commands": [{
+      "command": "ngx-translate-lookup.reload",
+      "title": "Reload ngx-translate-lookup dictionary"
+    }],
     "configuration": {
       "title": "ngx-translate translations lookup configuration",
       "properties": {
@@ -74,8 +72,8 @@
     "resx": "1.2.0"
   },
   "devDependencies": {
-    "typescript": "^2.6.1",
-    "vscode": "^1.1.6",
+    "typescript": "^3.2.2",
+    "vscode": "^1.1.26",
     "tslint": "^5.8.0",
     "@types/node": "^7.0.43",
     "@types/mocha": "^2.2.42"
