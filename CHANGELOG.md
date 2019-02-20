@@ -2,6 +2,10 @@
 
 All notable changes to the "ngx-translate-lookup" extension will be documented in this file.
 
+## 1.1.3
+
+- Improved completion provider to only provide when 'translate' is on the line.
+
 ## 1.1.2
 
 - Added support for relative paths to the resources file
