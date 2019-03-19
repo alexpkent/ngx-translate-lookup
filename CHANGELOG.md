@@ -2,6 +2,10 @@
 
 All notable changes to the "ngx-translate-lookup" extension will be documented in this file.
 
+## 1.1.5
+
+- Replaced readme images with gifs
+
 ## 1.1.4
 
 - Updated package.json and image fo vscode marketplace

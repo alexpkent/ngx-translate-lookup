@@ -8,15 +8,15 @@ This extension will read a .resx or .json file and then provide intellisense and
 
 ### Code Completion
 
-![code completion image](screenshots/intellisense.png)
+![code completion image](screenshots/intellisense.gif)
 
 ### Missing value warnings
 
-![missing values image](screenshots/problems.png)
+![missing values image](screenshots/problems.gif)
 
 ### Hover information
 
-![hover info image](screenshots/hover.png)
+![hover info image](screenshots/hover.gif)
 
 ### Reload
 
