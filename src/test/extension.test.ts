@@ -16,13 +16,13 @@ import { readJson } from '../extension';
 suite("Extension Tests", function () {
 
     test('translate directive regex finds the relevant items', function () {
-        const matcher = 'translate="([A-Za-z0-9_]+)"';
-        runTest(matcher, getDirectiveText(), 2);
+        const matcher = 'translate="([A-Za-z0-9_\.]+)"';
+        runTest(matcher, getDirectiveText(), 3);
     });
 
     test('translate pipe regex finds the relevant items', function () {
-        const matcher = "{{\\s?'([A-Za-z0-9_]+)'\\s?|\\s?translate_}}";
-        runTest(matcher, getPipeText(), 2);
+        const matcher = "{{\\s?'([A-Za-z0-9_\.]+)'\\s?|\\s?translate_}}";
+        runTest(matcher, getPipeText(), 3);
     });
 
     test('nested json can be read and used', function () {
@@ -61,10 +61,10 @@ suite("Extension Tests", function () {
     }
 
     function getDirectiveText() {
-        return '<label translate="TEST1"><label translate="TEST_2"><label translate2"NO_MATCH">';
+        return '<label translate="TEST1"><label translate="TEST_2" translate="foo.bar"><label translate2"NO_MATCH">';
     }
 
     function getPipeText() {
-        return '<label>{{\'TEST\'|translate}}<label><label>{{ \'TEST\' | translate }}</label>';
+        return '<label>{{\'TEST\'|translate}}<label><label>{{ \'TEST\' | translate }}{{\'foo.bar\'|translate}}</label>';
     }
 });
