@@ -10,7 +10,7 @@ const path = require("path");
 var output = vscode.window.createOutputChannel("ngx-translate-lookup");
 
 export class ResourceDictionary {
-  private constructor() {}
+  private constructor() { }
 
   public static get Instance() {
     return this._instance || (this._instance = new this());
@@ -68,7 +68,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         output.appendLine(
           `ngx-translate-lookup resource dictionary loaded from ${
-            config.resourcesPath
+          config.resourcesPath
           }`
         );
 
@@ -109,7 +109,7 @@ export function activate(context: vscode.ExtensionContext) {
 
           output.appendLine(
             `ngx-translate-lookup resource dictionary reloaded from ${
-              config.resourcesPath
+            config.resourcesPath
             }`
           );
         })
@@ -176,14 +176,7 @@ export function loadResources(
 
       if (resourcesType === "json") {
         const resources = JSON.parse(text);
-        Object.keys(resources).forEach(function(key) {
-          resourceDictionary.push({
-            label: `ngx-translate: ${key}`,
-            detail: resources[key],
-            insertText: key,
-            kind: vscode.CompletionItemKind.Text
-          });
-        });
+        readJson(resourceDictionary, resources);
       }
 
       resolve(resourceDictionary);
@@ -191,4 +184,22 @@ export function loadResources(
   });
 }
 
-export function deactivate() {}
+export function readJson(dictionary: any, resources: any, parentKey?: string) {
+  Object.keys(resources).forEach(function (key) {
+
+    const keyText = parentKey ? `${parentKey}.${key}` : key;
+
+    if (typeof resources[key] === 'object') {
+      readJson(dictionary, resources[key], keyText);
+    } else {
+      dictionary.push({
+        label: `ngx-translate: ${keyText}`,
+        detail: resources[key],
+        insertText: keyText,
+        kind: vscode.CompletionItemKind.Text
+      });
+    }
+  });
+}
+
+export function deactivate() { }
