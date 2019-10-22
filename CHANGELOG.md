@@ -2,6 +2,10 @@
 
 All notable changes to the "ngx-translate-lookup" extension will be documented in this file.
 
+## 1.2.0
+
+- Added support for nested json resources
+
 ## 1.1.6
 
 - Updated dependencies

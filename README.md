@@ -27,17 +27,37 @@ If the config is changed or the resource dictionary is modified the extension ca
 This extension contributes the following settings:
 
 - 'ngx-translate.lookup.resourcesType': Type of resource file, either .resx or .json.
+
   - If json then the format should be:
+
   ```
   {
     "STRING1" : "This is the first",
     "STRING2" : "This is the second"
   }
   ```
-- `ngx-translate.lookup.resourcesPath`: Path to a resources file (.resx or.json) file for lookups.
+
+  - or you can mix with nested json:
+
+  ```
+  {
+    "STRING1" : "This is the first",
+    "STRING2" : "This is the second",
+    "foo": {
+      "bar": {
+        "word1": "translated1",
+        "word2": "translated2"
+      }
+    }
+  }
+  ```
+
+  Which on selection will result in 'foo.bar.word1' as the value to be translated.
+
+* `ngx-translate.lookup.resourcesPath`: Path to a resources file (.resx or.json) file for lookups.
   This can either be a full path ('C:\\\resources.resx') or a relative path ('..\\\\..\\\resources.resx').
 
   If relative then the setting should be in Workspace settings and will be relative from the first workspace folder opened.
 
-- `ngx-translate.lookup.regex`: Regular expressions used to locate translation string/keys within documents.
+* `ngx-translate.lookup.regex`: Regular expressions used to locate translation string/keys within documents.
   These default to find usages of 'translate="KEY"' and '{{'KEY' | translate}}'
