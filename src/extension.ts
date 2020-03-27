@@ -1,8 +1,10 @@
 "use strict";
-import * as vscode from "vscode";
-import { createHoverProvider } from "./hoverProvider";
-import { createCompletionItemProvider } from "./completionItemProvider";
-import { createHighlightProvider } from "./highlightProvider";
+import * as vscode from 'vscode';
+
+import { createCompletionItemProvider } from './completionItemProvider';
+import { createHighlightProvider } from './highlightProvider';
+import { createHoverProvider } from './hoverProvider';
+
 const resx2js = require("resx/resx2js");
 const fs = require("fs");
 const path = require("path");
@@ -30,11 +32,18 @@ export class ResourceDictionary {
 
 export function readResourceConfig() {
   const config = vscode.workspace.getConfiguration();
-  const resourcesPath = config.get(
+  const resourcesPaths = config.get<string[]>("ngx-translate.lookup.resourcesPaths") || [];
+
+  const resourcesPath = config.get<string>(
     "ngx-translate.lookup.resourcesPath"
-  ) as string;
-  if (!resourcesPath) {
-    output.appendLine("No resources path found in config");
+  );
+
+  if (resourcesPath) {
+    resourcesPaths.push(resourcesPath);  
+  }
+
+  if (resourcesPaths.length < 1) {
+    output.appendLine("No resources paths found in config; Set `ngx-translate.lookup.resourcesPaths` or `ngx-translate.lookup.resourcesPath`");
     return;
   }
 
@@ -43,12 +52,12 @@ export function readResourceConfig() {
   ) as string;
 
   output.appendLine(
-    `Resources config type: '${resourcesType}', path: '${resourcesPath}'`
+    `Resources config type: '${resourcesType}', paths: '${resourcesPaths}'`
   );
 
   return {
-    resourcesPath: resourcesPath,
-    resourcesType: resourcesType
+    resourcesPaths,
+    resourcesType
   };
 }
 
@@ -56,19 +65,20 @@ export function activate(context: vscode.ExtensionContext) {
   output.show(true);
 
   const config = readResourceConfig();
+  
   if (!config) {
     output.appendLine("No resources config found.");
     return;
   }
 
   try {
-    loadResources(config.resourcesPath, config.resourcesType)
+    loadResources(config.resourcesPaths, config.resourcesType)
       .then(dictionary => {
         ResourceDictionary.Instance.setResources(dictionary);
 
         output.appendLine(
           `ngx-translate-lookup resource dictionary loaded from ${
-          config.resourcesPath
+          config.resourcesPaths
           }`
         );
 
@@ -103,19 +113,21 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      loadResources(config.resourcesPath, config.resourcesType)
+      
+
+      loadResources(config.resourcesPaths, config.resourcesType)
         .then(dictionary => {
           ResourceDictionary.Instance.setResources(dictionary);
 
           output.appendLine(
             `ngx-translate-lookup resource dictionary reloaded from ${
-            config.resourcesPath
+            config.resourcesPaths
             }`
           );
         })
         .catch(() => {
           output.appendLine(
-            "Error when reading resource file, please check your ngx-translate.lookup.resourcesPath and type setting."
+            "Error when reading resource file, please check your `ngx-translate.lookup.resourcesPaths` and `ngx-translate.lookup.type` setting."
           );
         });
     }
@@ -124,9 +136,18 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function loadResources(
+    resourcesPaths: string[],
+    resourcesType: string
+): Promise<vscode.CompletionItem[]> {
+    return Promise.all(resourcesPaths.map(path => loadResource(path, resourcesType)))
+            .then(dictionaries => ([] as vscode.CompletionItem[]).concat(...dictionaries));
+}
+
+
+export function loadResource(
   resourcesPath: string,
   resourcesType: string
-): Promise<any> {
+): Promise<vscode.CompletionItem[]> {
   let resourceDictionary: vscode.CompletionItem[] = [];
 
   return new Promise((resolve, reject) => {
