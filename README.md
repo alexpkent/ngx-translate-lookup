@@ -54,8 +54,13 @@ This extension contributes the following settings:
 
   Which on selection will result in 'foo.bar.word1' as the value to be translated.
 
+  Provide either a single path or array of paths to resource files.
+
 * `ngx-translate.lookup.resourcesPath`: Path to a resources file (.resx or.json) file for lookups.
-  This can either be a full path ('C:\\\resources.resx') or a relative path ('..\\\\..\\\resources.resx').
+
+* `ngx-translate.lookup.resourcesPaths`: Array of path to resources file (.resx or.json) file for lookups.
+
+  Paths can either be a full path ('C:\\\resources.resx') or a relative path ('..\\\\..\\\resources.resx').
 
   If relative then the setting should be in Workspace settings and will be relative from the first workspace folder opened.
 
