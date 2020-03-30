@@ -39,7 +39,7 @@ export function readResourceConfig() {
   );
 
   if (resourcesPath) {
-    resourcesPaths.push(resourcesPath);  
+    resourcesPaths.push(resourcesPath);
   }
 
   if (resourcesPaths.length < 1) {
@@ -65,7 +65,7 @@ export function activate(context: vscode.ExtensionContext) {
   output.show(true);
 
   const config = readResourceConfig();
-  
+
   if (!config) {
     output.appendLine("No resources config found.");
     return;
@@ -113,8 +113,6 @@ export function activate(context: vscode.ExtensionContext) {
         return;
       }
 
-      
-
       loadResources(config.resourcesPaths, config.resourcesType)
         .then(dictionary => {
           ResourceDictionary.Instance.setResources(dictionary);
@@ -136,13 +134,12 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function loadResources(
-    resourcesPaths: string[],
-    resourcesType: string
+  resourcesPaths: string[],
+  resourcesType: string
 ): Promise<vscode.CompletionItem[]> {
-    return Promise.all(resourcesPaths.map(path => loadResource(path, resourcesType)))
-            .then(dictionaries => ([] as vscode.CompletionItem[]).concat(...dictionaries));
+  return Promise.all(resourcesPaths.map(path => loadResource(path, resourcesType)))
+    .then(dictionaries => ([] as vscode.CompletionItem[]).concat(...dictionaries));
 }
-
 
 export function loadResource(
   resourcesPath: string,
