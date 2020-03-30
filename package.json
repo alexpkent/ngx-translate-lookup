@@ -50,11 +50,17 @@
             "json"
           ]
         },
+        "ngx-translate.lookup.resourcesPaths": {
+          "type": "array",
+          "default": [],
+          "description": "Array of aths to a resource files (.resx or.json) for lookups.",
+          "required": true
+        },
         "ngx-translate.lookup.resourcesPath": {
           "type": "string",
-          "default": "resources.resx",
-          "description": "Path to a resources file (.resx or.json) file for lookups.",
-          "required": true
+          "default": "",
+          "description": "Path to a resources file (.resx or.json) for lookups.",
+          "required": false
         },
         "ngx-translate.lookup.regex": {
           "type": "array",
