@@ -66,7 +66,7 @@
           "type": "array",
           "default": [
             "translate=\"([A-Za-z0-9_\\.]+)\"",
-            "{{\\s?'([A-Za-z0-9_\\.]+)'\\s?|\\s?translate_}}"
+            "{{\\s?'([A-Za-z0-9_\\.]+)'\\s?\\|\\s?translate\\s?}}"
           ],
           "description": "Regular expressions used to locate translation string/keys within documents.",
           "required": true
@@ -79,16 +79,19 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "postinstall": "node ./node_modules/vscode/bin/install",
-    "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    "test": "npm run compile && node ./node_modules/vscode/bin/test",
+    "lint": "eslint -c .eslintrc.js --ext .ts ./src"
   },
   "dependencies": {
-    "resx": "1.2.0"
+    "resx": "2.0.3"
   },
   "devDependencies": {
-    "typescript": "^3.2.2",
-    "vscode": "^1.1.29",
-    "tslint": "^5.8.0",
-    "@types/node": "^7.0.43",
-    "@types/mocha": "^2.2.42"
+    "@types/mocha": "8.2.2",
+    "@types/node": "15.0.2",
+    "@typescript-eslint/eslint-plugin": "^4.22.1",
+    "@typescript-eslint/parser": "^4.22.1",
+    "eslint": "^7.26.0",
+    "typescript": "4.2.4",
+    "vscode": "^1.1.37"
   }
 }
