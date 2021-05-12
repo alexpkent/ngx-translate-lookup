@@ -65,8 +65,6 @@ export function readResourceConfig() {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-  output.show(true);
-
   const config = readResourceConfig();
 
   if (!config) {
