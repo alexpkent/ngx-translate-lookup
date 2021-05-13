@@ -2,6 +2,12 @@
 
 All notable changes to the "ngx-translate-lookup" extension will be documented in this file.
 
+## 1.3.1
+
+- Updated Regex
+- Removed call to show output channel which brings channel to front and receives focus
+- Updated dependencies such as eslint
+
 ## 1.3.0
 
 - Added support for multiple resource file paths in configuration
