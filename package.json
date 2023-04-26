@@ -83,7 +83,7 @@
     "lint": "eslint -c .eslintrc.js --ext .ts ./src"
   },
   "dependencies": {
-    "resx": "2.0.3"
+    "resx": "2.0.4"
   },
   "devDependencies": {
     "@types/mocha": "8.2.2",
